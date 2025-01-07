@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Art (possibly animation)</title>
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: rgb(3, 32, 42);
+        }
+        #container.canvas{
+            position: relative; /* Removed unnecessary properties */
+            border: 3px solid purple;
+        }
+        h1{
+            color:aqua;
+        }
+        h2{
+            border:rgb(185, 156, 214);
+            font: color rgb(57, 186, 34);
+        }
+       
+    </style>
+</head>
+<body>
+    <h1>Spongebob Gameart</h1>
+    <h2>Hi! Welcome to the Spongebob Game Art Experience! Here you can use the keyboard keys to go left, right, up, and down; with the sole purpose of chasing the circle on the screen.
+        there are two inputs below that can help you change the color, and, if you find that you can't change it, you can add a color of your choosing into the color arrays on the second input.
+        That way you can then use the color you want to color the circle.
+    </h2>
+    <div id="container">
+    <canvas id="myCanvas" width="1000" height="500"></canvas>
+    </div>
+    <label>
+        <input id="nA">
+        <button id="inputnA">Change color</button>
+    </label>
+    <label>
+        <input id="nB"> <button id="inputnB">Add color to array</button>
+         <br>
+    </label>
+    <script>
+        var canvas;
+        var ctx;
+        var w = 1000;
+        var h = 500;
+        var radius = 5;
+        var b = {
+            x: 0,
+            y: h/2,
+            randomness: rand(),
+            s: 0.1, //speed of the circle
+            d: 1, //direction of circle
+            c: ['black', 'green', 'blue', 'pink', 'violet'],
+        }
+        // var x = 300;
+        // var y = 150;
+        const keys=[]; //using array for my keydowns.
+        var o = {
+             x: w/2,
+             y: h/2,
+             speedo:50,
+             direction:1
+
+        }
+        //setting up Canvas function call
+        setUpCanvas();
+        spongebob(o);
+        circles(b); //will create circles that will uh move from left to right
+
+
+         // Create an image object
+         var backgroundImage = new Image();
+        backgroundImage.src = 'images/background.jpg' // Set the URL of the image
+        backgroundImage.onload = function() {
+        animate(); // Start animation only after the image is loaded
+        };
+
+        function clear(){
+        //to clear the circle before it's moving each time
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        //
+        
+        var lastTime = 0;
+        var frameRate = 100;
+
+        function animate(timestamp){
+            if (timestamp - lastTime >= frameRate){
+            clear();
+            ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+            spongebob(o);
+            
+            circles(b);
+
+            DetectCollision();
+            console.log(`the value of b.y is${b.y}` );
+            console.log(`the value of b.x is ${b.x}`);
+             //the value (or distance of b.x is known to me (let's say 1 px = 1 cm))
+             lastTime = timestamp;
+            }
+            requestAnimationFrame(animate);
+        }
+
+        // function moreCircles(){
+        //     if(circles(b)[-1*b.d]){
+        //         circles(b+=1);
+        //     }
+        // }
+
+        function circles(b){
+            w = 1000;
+
+            var randx = Math.floor(Math.random()*canvas.width);
+            var randy = Math.floor(Math.random()*canvas.height);
+
+            b.x +=   (b.d*randx)*b.s;
+            b.y +=   (b.d*randy)*b.s; //x value increments on the basis of speed and direction.
+
+            if((b.x>=w|| b.x<=0)){
+                b.d *= -1; //reversing the direction on the basis of this conditon
+                //I have to clamp the boundaries (this is from the poe AI)
+                b.x = Math.max(0, Math.min(b.x, w));
+            }
+
+            if (b.y >= h || b.y <= 0) {
+                //reverse direction in y - direction
+                b.y *= -1;
+             // Clamp to bounds
+            b.y = Math.max(0, Math.min(b.y, h));
+          } 
+
+            ctx.beginPath();
+            ctx.arc(b.x, b.y, radius, 0, 2 * Math.PI);  //the circles finally hit the border now 
+            ctx.closePath();
+            ctx.strokeStyle = 'black';
+            ctx.lineWidth = 1;
+            ctx.fillStyle = b.c[0];
+            ctx.fill();
+            ctx.stroke();
+
+        }
+        
+
+     
+                   //conditional for changing fillStyle
+  document.getElementById('inputnA').addEventListener("click", function(circles) {
+            var changeColor = document.getElementById('nA').value.trim(); // Use .value to get the input's value
+                 if (b.c.includes(changeColor)) {
+                    b.c[0] = changeColor;
+                    ctx.fillStyle = changeColor; // Update the first color in the array
+                    console.log(`changed color to ${b.c}`);
+                    
+             } else {
+                b.c[0] = 'purple';
+             } 
+             
+            });
+            //another conditional for adding new colors to the array 
+            document.getElementById('inputnB').addEventListener("click", function(circles){
+            var newcolor = document.getElementById("nB").value.trim();
+            if (!b.c.includes(newcolor)){  //can't use === with an array where i newcolor === b.c 
+                b.c.push(newcolor) === b.c[0]; //when found false that the new color isn't in the array
+                console.log(b.c.push(newcolor));
+                console.log(b.c);
+            }
+        
+        })
+        
+
+    // Add event listeners for key presses
+    window.addEventListener("keydown", function (e) {
+        keys[e.key] = true;
+    });
+
+
+    window.addEventListener("keyup", function (e) {
+        keys[e.key] = false;
+    });
+              
+        function spongebob(o){
+            var x = o.x; 
+            var y = o.y;
+            ctx.beginPath();
+            ctx.rect(o.x, o.y, o.x/8,  o.y/8);   //instead of using square method cause it doesn't exist in the ctx i use rect method
+            ctx.closePath();
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 5;
+            ctx.fillStyle = "yellow";
+            ctx.fill();
+            ctx.stroke();
+
+            if (keys['ArrowLeft']) {
+            o.x -= o.speedo; // Move left
+        }
+        if (keys['ArrowRight']) {
+            o.x += o.speedo; // Move right
+        }
+        if (keys['ArrowUp']) {
+            o.y -= o.speedo; // Move up
+        }
+        if (keys['ArrowDown']) {
+            o.y += o.speedo; // Move down
+        }
+
+        }
+
+
+        //detect collision
+        function DetectCollision(){
+            var stouchCirclex = b.x - o.x; 
+            var stouchCircley = b.y - o.y; //to get the resultant of the x and y coordinates of both circle and spongbob 
+                                            //if resultant is zero it collided so the following condition will be
+            if(stouchCirclex > (radius + o.x)/8 && stouchCircley > (radius + o.y)/8){
+                radius = 5;
+                console.log('no collison'); //since resultant is greater than the combined x coordinates 
+            } else if(stouchCirclex <=  radius + (o.x)/8 && stouchCircley <= radius + (o.y/8)){
+                radius = 0;
+                console.log('collision!');
+             }
+            
+                
+            //if proven false
+        }
+
+        function setUpCanvas(){
+            canvas = document.getElementById("myCanvas"); //forgot to type in 'canvas =....
+            ctx = canvas.getContext('2d');
+            canvas.style.border = "3px solid purple";
+            canvas.style.background = "navy blue";
+            canvas.width = 1000;
+            canvas.height = 500;
+
+        }
+
+        function rand(){
+           var result = Math.floor(Math.random() * 1000);
+           return result;
+           console.log(result);
+        }
+
+        console.log(typeof(b.x));
+        console.log(`the value of b.x is ${b.x}`);
+
+
+    </script>
+    <br>
+</body>
+</html>

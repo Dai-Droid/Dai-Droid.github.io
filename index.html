@@ -1,42 +1,69 @@
-<!Doctype html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MeghOmala</title>
-    <link rel="stylesheet" href="blop.css">
-    <link rel="ra.css" href="style.css">
-    </head>
-<body style="background-color:rgb(33, 4, 63);">
-<body>
-<center> 
-    <h1 style="color:rgb(50, 205, 216);">WebGorl</h1>
-    <br>
-</center>
-    <br>
-    <div style="text-align: center"> <p style="color:rgb(255, 27, 225);"> Hi, this webpage is a representation of my interests, which are mostly 
-    artistic, and showcases all of my artworks and pieces. I will be updating more, and hopefully, come up with a better webpage.</p></div> 
-    <br> <div class="flex-container">
-    <div class="normal"><img src="./pinkflamingogalaxy.jpg" alt="Pinkflamingogalaxy"> </div>
-    <div class="big"><img src="./guitargirl.jpg" alt="Guitargirl"></div>
-    <div class="normal"><img src="./tropics.jpg" alt="The Tropics"></div>
-    <div class="big"><img src="./purple.jpg" alt="Purple Woman"></div>
-    <div class="normal"><img src="./cold.jpg" alt="Cold Man"></div>
-    <div class="big"><img src="./1949.jpg" alt="1949"></div>
-    <div class="normal"><img src="./rollingblues.gif" alt="Rolling Blues"></div>
-    <div class="big"><img src="./prettyme.gif"></div>
-    <div class="normal"><img src="./handfalling.gif"></div>
-    <div class="big"><img src="./acrylicpaints.jpg"></div>
-    <div class="normal"><img src="./teddy.gif"></div>
-    <div class="big"><img src="./nep-min.jpg"></div>
-    <div class="normal"><img src="./me.jpg"></div>
-    <div class="big"><img src="./abyss.jpg"></div>
-    </div>
-    <br>
-    <br>
-    <center><a href="https://www.instagram.com/nininonohyihihi/"target="_blank"> Visit my instagram to view more of my creative projects and work!</a>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <style>
+        body {
+            background-color: rgb(33, 4, 63);
+            display: flex;
+            justify-content: space-evenly; /* Even spacing */
+            align-items: center;
+            flex-wrap: wrap;
+            height: 100vh; /* Full viewport height */
+            margin: 0; /* Remove default margin */
+        }
+        
+        a img {
+            height: 300px; /* Adjust height as needed */
+            width: 300px; /* Ensure width is defined */
+        }
 
-<br>
-    <a href="mailto:nihonrahman07@icloud.com"> Send me emails if your interested in, well, pretty much anything!</a>
-    </center>
+        #nav {
+            display: flex; /* Use flexbox layout */
+            justify-content: space-around; /* Even spacing between items */
+            width: 100%; /* Full width for nav */
+        }
+
+        #gameart, #poetrywiz {
+            background-color: rgba(255, 255, 255, 0.8); /* Light background for contrast */
+            border-radius: 8px; /* Rounded corners */
+            padding: 10px; /* Padding around the text and image */
+            transition: transform 0.3s, background-color 0.3s; /* Smooth transition effects */
+            text-align: center; /* Center text */
+            flex: 1; /* Allow items to grow */
+            margin: 10px; /* Space between items */
+        }
+
+        #gameart:hover {
+            transform: scale(1.05); /* Slightly enlarge on hover */
+            background-color: rgb(238, 120, 228); /* Change background on hover */
+        }
+
+        #poetrywiz:hover {
+            transform: scale(1.05);
+            background-color: rgb(56, 122, 245);
+        }
+
+        h1 {
+            text-align: center;
+            color: aqua;
+            margin: 20px 0; /* Space above and below the heading */
+        }
+    </style>
+</head>
+<body>
+    <h1>Gameart + Poetry</h1>
+    <div id="nav">
+        <a id="gameart" href="gameart.html">
+            <img alt="gameart" src="game.png">
+            gameart
+        </a> 
+        <a id="poetrywiz" href="poetrywiz.html">
+            <img alt="poetry" src="poetrywiz.png">
+            poetrywiz
+        </a>
+    </div>
 </body>
 </html>

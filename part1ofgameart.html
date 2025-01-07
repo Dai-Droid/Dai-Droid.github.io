@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Art (possibly animation)</title>
+    <style>
+        body{
+            background-color: rgb(3, 32, 42);
+        }
+        #container{
+            max-height:fit-content;
+            width: fit-content;       
+            margin: auto;
+            text-align: center;
+            border: 3px solid purple;
+        }
+       
+    </style>
+</head>
+<body>
+    <div id="container">
+    <canvas id="myCanvas"></canvas>
+    </div>
+    <label>
+        <input type="text" id="nA">
+        <button>Change color</button>
+
+    </label>
+    <label>
+        <input type="number" id="nB"> 
+        <button>Change shape</button>
+    </label>
+    <script>
+        var canvas;
+        var ctx;
+        var w = 1000;
+        var h = 500;
+        var radius = 5;
+        var b = {
+            x: 0,
+            y: h/2,
+            randomness: rand(2),
+            s: 2, //speed of the circle
+        }
+        var x = 300;
+        var y = 150;
+        var o = {
+             x: w/2,
+             y: h/2,
+
+        }
+        //setting up Canvas function call
+        setUpCanvas();
+        spongebob(o);
+        circles(b); //will create circles that will uh move from left to right
+        rand();  
+        animate();
+        
+        function clear(){
+        //to clear the circle before it's moving each time
+            ctx.arc(0, 0, 0, 0, 2 * Math.PI);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        }
+        //
+        function animate(){
+            clear();
+            spongebob(o);
+            circles(b);
+            requestAnimationFrame(animate);
+        }
+
+        function circles(b){
+            var x = b.x;
+            var y = b.y;
+
+            if(b.x<1000){b.x+=b.s}
+        else{b.x = 0}
+
+            ctx.beginPath();
+            ctx.arc(x/2, y/2, radius, 0, 2 * Math.PI);
+            ctx.closePath();
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 2;
+            ctx.fillStyle = 'purple';
+            ctx.fill();
+            ctx.stroke();
+
+        }
+
+        function spongebob(o){
+            var x = o.x; 
+            var y = o.y;
+            ctx.beginPath();
+            ctx.rect(x/25, y/25, (2.5 + x)/8, (2.5 + y)/8);   //instead of using square method cause it doesn't exist in the ctx i use rect method
+            ctx.closePath();
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 5;
+            ctx.fillStyle = "yellow";
+            ctx.fill();
+            ctx.stroke();
+        }
+
+
+        function setUpCanvas(){
+            canvas = document.getElementById("myCanvas"); //forgot to type in 'canvas =....
+            ctx = canvas.getContext('2d');
+            canvas.style.border = "3px solid purple";
+            canvas.style.background = "navy blue";
+            canvas.width = w;
+            canvas.height = h;
+        }
+
+        function rand(){
+           var result = Math.floor(Math.random() * 1000);
+           return result;
+           console.log(result);
+        }
+
+
+console.log(typeof(b.x));
+console.log(`the value of b.x is ${b.x}`);
+    </script>
+    <br>
+</body>
+</html>

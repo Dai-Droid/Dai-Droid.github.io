@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poems</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            border-width: 2px;
+            border-style: dotted;
+            border-color: blue;
+            padding: 10px;
+        }
+        #generatepoetry {
+            display: block;
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid pink;
+            min-height: 50px;
+        }
+        button {
+            margin-left: 10px;
+        }
+        body{
+            background-color: bisque;
+        }
+        h1{
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>Poetry</h1>
+    <label>
+        <input id="insertp" placeholder="Enter your poem here" />
+        <button onclick="addPoem()">Enter Poem</button>
+    </label>
+    <label>
+        <output id="generatepoetry"></output>
+    </label>
+
+    <script>
+        //i did not use canvas for this one
+        function addPoem() {
+            const poemInput = document.getElementById('insertp').value;
+            const outputArea = document.getElementById('generatepoetry');
+            outputArea.textContent = poemInput;
+            document.getElementById('insertp').value = ''; 
+        }
+    </script>
+</body>
+</html>
