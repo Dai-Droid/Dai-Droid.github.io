@@ -24,7 +24,7 @@
         #nav {
             display: flex;
             justify-content: space-around;
-            width: 100%;
+            width: auto; /* Adjust to prevent full width */
             flex-wrap: wrap; /* Allow wrapping for smaller screens */
         }
 
@@ -60,6 +60,14 @@
 
         #pins {
             margin-top: 20px; /* Space above the PINS link */
+            text-align: center; /* Center the text */
+        }
+
+        #pins a {
+            font-weight: bold; /* Make text bold */
+            font-style: italic; /* Make text italic */
+            text-decoration: none; /* Remove underline */
+            color: red; /* Set color to bright red */
         }
     </style>
 </head>
@@ -76,7 +84,7 @@
         </a>
     </div>
     <div id="pins">
-        <a class="nav-item" href="pinterest-ed271.html">
+        <a href="pinterest-ed271.html">
             PINS
         </a>
     </div>
